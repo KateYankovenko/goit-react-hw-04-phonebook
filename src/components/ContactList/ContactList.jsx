@@ -1,18 +1,18 @@
 import { ContactComponent } from '../ContactComponent/ContactComponent';
 
-export const ContactList = ({ values, deleteContact }) => (
+export const ContactList = ({ contacts, filter, deleteContact }) => (
   <ul>
-    {values.filter === ''
-      ? values.contacts.map(contact => (
+    {filter === ''
+      ? contacts.map(contact => (
           <ContactComponent
             key={contact.id}
             contact={contact}
             deleteContact={deleteContact}
           />
         ))
-      : values.contacts
+      : contacts
           .filter(contact =>
-            contact.name.toLowerCase().includes(values.filter.toLowerCase())
+            contact.name.toLowerCase().includes(filter.toLowerCase())
           )
           .map(contact => (
             <ContactComponent
