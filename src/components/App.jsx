@@ -16,6 +16,20 @@ export class App extends Component {
     filter: '',
   };
 
+  componentDidMount() {
+    const savedContacts = localStorage.getItem('contacts');
+    const parsedContacts = JSON.parse(savedContacts);
+    if (parsedContacts) {
+      this.setState({ contacts: parsedContacts });
+  }  
+  }
+  
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.contacts !== this.state.contacts) {
+      localStorage.setItem('contacts', JSON.stringify(this.state.contacts));
+    }
+  }
+
   handleSubmit = ({ name, number }, { resetForm }) => {
     if (this.state.contacts.find(contact => contact.name === name)) {
       alert(name + ' is already in contacts');
@@ -36,12 +50,12 @@ export class App extends Component {
     return;
   };
 
+
   filterContacts = e => {
     this.setState({ filter: e.currentTarget.value });
   };
 
   deleteContact = id => {
-    console.log(id);
     this.setState(prevState => ({
       contacts: prevState.contacts.filter(contact => contact.id !== id),
     }));
@@ -62,6 +76,20 @@ export class App extends Component {
   }
 }
 
+
+  // componentDidMount() {
+  //   const savedContacts = localStorage.getItem('contacts');
+  //   const parsedContacts = JSON.parse(savedContacts);
+  //   if (parsedContacts) {
+  //     this.setState({ contacts: parsedContacts });
+  // }  
+  // }
+  
+  // componentDidUpdate(prevProps, prevState) {
+  //   if (prevState.contacts !== this.state.contacts) {
+  //     localStorage.setItem('contacts', JSON.stringify(this.state.contacts));
+  //   }
+  // }
 
 // export const App = () => {
 //   return (
